@@ -6,6 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Documentación del módulo de Cuadratura Gaussiana en Python">
+      
+      
+        <meta name="author" content="Jean Carlo Lanuza">
       
       
       
@@ -60,6 +64,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#explicacion-del-metodo" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -217,6 +226,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -295,6 +306,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -310,9 +323,13 @@
 
 
 
-  <h1>Explanation</h1>
-
-
+<h1 id="explicacion-del-metodo">Explicación del Método</h1>
+<p>La cuadratura Gaussiana permite aproximar integrales de la forma:</p>
+<div class="arithmatex">\[
+\int_a^b f(x) dx \approx \sum_{i=1}^{N} w_i f(x_i)
+\]</div>
+<p>donde <span class="arithmatex">\(x_i\)</span> son los puntos de colocación y <span class="arithmatex">\(w_i\)</span> los pesos.<br />
+Se calculan usando polinomios de Legendre.</p>
 
 
 
