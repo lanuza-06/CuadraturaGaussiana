@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#explicacion-teorica-de-la-cuadratura-gaussiana" class="md-skip">
+        <a href="#metodo-de-cuadratura-gauss-legendre" class="md-skip">
           Skip to content
         </a>
       
@@ -280,19 +280,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduccion" class="md-nav__link">
+  <a href="#explicacion-del-metodo" class="md-nav__link">
     <span class="md-ellipsis">
-      Introducción
+      Explicación del Método
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Introducción">
+    <nav class="md-nav" aria-label="Explicación del Método">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ventaja-principal" class="md-nav__link">
+  <a href="#idea-principal" class="md-nav__link">
     <span class="md-ellipsis">
-      Ventaja Principal
+      Idea Principal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pasos-para-aplicar-el-metodo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pasos para Aplicar el Método
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cambio-de-intervalo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cambio de Intervalo
     </span>
   </a>
   
@@ -304,9 +322,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#polinomios-de-legendre" class="md-nav__link">
+  <a href="#exactitud-para-una-funcion-especifica" class="md-nav__link">
     <span class="md-ellipsis">
-      Polinomios de Legendre
+      Exactitud para una Función Específica
     </span>
   </a>
   
@@ -391,19 +409,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduccion" class="md-nav__link">
+  <a href="#explicacion-del-metodo" class="md-nav__link">
     <span class="md-ellipsis">
-      Introducción
+      Explicación del Método
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Introducción">
+    <nav class="md-nav" aria-label="Explicación del Método">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ventaja-principal" class="md-nav__link">
+  <a href="#idea-principal" class="md-nav__link">
     <span class="md-ellipsis">
-      Ventaja Principal
+      Idea Principal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pasos-para-aplicar-el-metodo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pasos para Aplicar el Método
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cambio-de-intervalo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cambio de Intervalo
     </span>
   </a>
   
@@ -415,9 +451,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#polinomios-de-legendre" class="md-nav__link">
+  <a href="#exactitud-para-una-funcion-especifica" class="md-nav__link">
     <span class="md-ellipsis">
-      Polinomios de Legendre
+      Exactitud para una Función Específica
     </span>
   </a>
   
@@ -439,38 +475,74 @@
 
 
 
-<h1 id="explicacion-teorica-de-la-cuadratura-gaussiana">Explicación Teórica de la Cuadratura Gaussiana</h1>
-<h2 id="introduccion">Introducción</h2>
-<p>La <strong>Cuadratura Gaussiana</strong> es un método de integración numérica que permite aproximar integrales definidas con gran precisión usando pocos puntos estratégicamente seleccionados.<br />
-Se basa en evaluar la función solo en <strong>nodos de Gauss</strong> <span class="arithmatex">\(x_i\)</span> y multiplicar por <strong>pesos asociados</strong> <span class="arithmatex">\(w_i\)</span>:</p>
+<h1 id="metodo-de-cuadratura-gauss-legendre">Método de Cuadratura Gauss-Legendre</h1>
+<h2 id="explicacion-del-metodo">Explicación del Método</h2>
+<p>La <strong>Cuadratura Gauss-Legendre</strong> es un método numérico para aproximar integrales definidas de la forma:</p>
 <div class="arithmatex">\[
-I = \int_a^b f(x) dx \approx \sum_{i=1}^{N} w_i f(x_i)
+\int_{-1}^{1} f(x) \, dx
 \]</div>
-<h3 id="ventaja-principal">Ventaja Principal</h3>
-<ul>
-<li>Con N puntos exactos, se pueden integrar polinomios de grado hasta <span class="arithmatex">\(2N-1\)</span> sin error.</li>
-<li>Es mucho más eficiente que métodos clásicos para funciones suaves.</li>
-</ul>
-<hr />
-<h2 id="polinomios-de-legendre">Polinomios de Legendre</h2>
-<p>Los <strong>puntos y pesos de Gauss</strong> se obtienen a partir de los <strong>polinomios de Legendre</strong>, <span class="arithmatex">\(P_n(x)\)</span>, definidos en el intervalo <span class="arithmatex">\([-1,1]\)</span>.  </p>
-<p>Propiedades importantes:</p>
+<p>El objetivo es obtener una <strong>aproximación exacta para polinomios de grado máximo <span class="arithmatex">\(2n-1\)</span></strong> usando <strong>n puntos</strong>, eligiendo cuidadosamente los <strong>nodos y pesos</strong>.</p>
+<h3 id="idea-principal">Idea Principal</h3>
 <ol>
 <li>
-<p><strong>Ortogonalidad:</strong><br />
-[
-\int_{-1}^{1} P_n(x) P_m(x) dx = 0 \quad \text{para } n \neq m
-]</p>
+<p><strong>Selección de nodos:</strong><br />
+   Los puntos <span class="arithmatex">\(x_1, x_2, ..., x_n\)</span> donde se evalúa la función no se eligen equidistantes.<br />
+   Se eligen como <strong>los ceros del polinomio de Legendre de grado <span class="arithmatex">\(n\)</span></strong>, lo que garantiza exactitud para polinomios de grado hasta <span class="arithmatex">\(2n-1\)</span>.</p>
 </li>
 <li>
-<p><strong>Nodos de Gauss:</strong> Raíces de <span class="arithmatex">\(P_N(x)\)</span>.</p>
+<p><strong>Determinación de pesos:</strong><br />
+   Cada nodo tiene un peso <span class="arithmatex">\(w_i\)</span> que refleja la “importancia” de la evaluación en ese punto:</p>
 </li>
-<li><strong>Pesos de Gauss:</strong> Se calculan automáticamente para garantizar la integración exacta de polinomios de grado ≤ <span class="arithmatex">\(2N-1\)</span>.</li>
 </ol>
-<p>En Python:</p>
-<p>```python
-import numpy as np
-x, w = np.polynomial.legendre.leggauss(N)</p>
+<div class="arithmatex">\[
+w_i = \frac{2}{(1 - x_i^2)[P_n'(x_i)]^2}
+\]</div>
+<p>donde <span class="arithmatex">\(P_n'(x_i)\)</span> es la derivada del polinomio de Legendre de grado <span class="arithmatex">\(n\)</span> evaluada en <span class="arithmatex">\(x_i\)</span>.</p>
+<ol>
+<li><strong>Fórmula final:</strong>  </li>
+</ol>
+<div class="arithmatex">\[
+\int_{-1}^{1} f(x) \, dx \approx \sum_{i=1}^{n} w_i f(x_i)
+\]</div>
+<h3 id="pasos-para-aplicar-el-metodo">Pasos para Aplicar el Método</h3>
+<ol>
+<li>Elegir el número de puntos <span class="arithmatex">\(n\)</span> según la precisión deseada.  </li>
+<li>Calcular los nodos <span class="arithmatex">\(x_i\)</span> como los ceros del polinomio de Legendre <span class="arithmatex">\(P_n(x)\)</span>.  </li>
+<li>Calcular los pesos <span class="arithmatex">\(w_i\)</span> usando la fórmula de los pesos.  </li>
+<li>Evaluar la función <span class="arithmatex">\(f(x)\)</span> en cada nodo <span class="arithmatex">\(x_i\)</span>.  </li>
+<li>Sumar los productos <span class="arithmatex">\(w_i f(x_i)\)</span> para obtener la aproximación de la integral.</li>
+</ol>
+<h3 id="cambio-de-intervalo">Cambio de Intervalo</h3>
+<p>Para integrar en un intervalo <span class="arithmatex">\([a, b]\)</span>:</p>
+<div class="arithmatex">\[
+x = \frac{b-a}{2} t + \frac{b+a}{2}, \quad t \in [-1,1]
+\]</div>
+<div class="arithmatex">\[
+\int_a^b f(x) dx \approx \frac{b-a}{2} \sum_{i=1}^n w_i f\Big(\frac{b-a}{2} x_i + \frac{b+a}{2}\Big)
+\]</div>
+<hr />
+<h2 id="exactitud-para-una-funcion-especifica">Exactitud para una Función Específica</h2>
+<p>Consideremos:</p>
+<div class="arithmatex">\[
+f(x) = x^6 - x^2 \sin(2x), \quad x \in [1,3]
+\]</div>
+<ul>
+<li>
+<p>El <strong>término <span class="arithmatex">\(x^6\)</span></strong> es un polinomio de grado 6.<br />
+  Con <strong>n puntos</strong>, la cuadratura Gauss-Legendre es exacta para polinomios de grado hasta <span class="arithmatex">\(2n-1\)</span>.<br />
+  Por ejemplo, con <strong>n = 4 puntos</strong>, se puede integrar exactamente cualquier polinomio de grado hasta 7, por lo que <span class="arithmatex">\(x^6\)</span> se integra <strong>exactamente</strong>.</p>
+</li>
+<li>
+<p>El <strong>término <span class="arithmatex">\(-x^2 \sin(2x)\)</span></strong> no es un polinomio; es <strong>una función trascendental</strong>.<br />
+  Por lo tanto, la integral de este término <strong>no será exacta</strong>, pero la aproximación sigue siendo muy buena.<br />
+  La precisión aumenta al <strong>incrementar el número de puntos n</strong>, ya que la cuadratura Gaussiana minimiza el error de integración.</p>
+</li>
+</ul>
+<p>En resumen:</p>
+<ul>
+<li><strong>Polinomios de grado ≤ 2n-1 → integral exacta.</strong>  </li>
+<li><strong>Funciones no polinómicas → aproximación muy precisa con pocos nodos.</strong></li>
+</ul>
 
 
 

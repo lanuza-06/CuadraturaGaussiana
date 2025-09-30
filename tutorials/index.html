@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ejemplo-de-uso" class="md-skip">
+        <a href="#tutorial-completo-de-cuadratura-gaussiana" class="md-skip">
           Skip to content
         </a>
       
@@ -261,6 +261,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -272,6 +285,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#funciones-del-modulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Funciones del módulo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Funciones del módulo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-valorexacto_1_a_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ValorExacto_1_a_3()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gausslegendrexwn" class="md-nav__link">
+    <span class="md-ellipsis">
+      GaussLegendrexW(N)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -319,6 +384,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#funciones-del-modulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Funciones del módulo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Funciones del módulo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-valorexacto_1_a_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ValorExacto_1_a_3()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gausslegendrexwn" class="md-nav__link">
+    <span class="md-ellipsis">
+      GaussLegendrexW(N)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -333,12 +439,84 @@
 
 
 
-<h1 id="ejemplo-de-uso">Ejemplo de Uso</h1>
+<h1 id="tutorial-completo-de-cuadratura-gaussiana">Tutorial Completo de Cuadratura Gaussiana</h1>
+<p>Este tutorial explica cómo usar el módulo <code>IntegralGaussianCuadrature.py</code> para calcular integrales usando Cuadratura Gauss-Legendre, incluyendo explicación de cada función, ejemplo de uso y cálculo de errores.</p>
+<hr />
+<h2 id="funciones-del-modulo">Funciones del módulo</h2>
+<h3 id="1-valorexacto_1_a_3">1. <code>ValorExacto_1_a_3()</code></h3>
+<p>Calcula el valor analítico de la integral en [1,3].</p>
 <p>```python
-from IntegralGaussianCuadrature import gaussian_integral</p>
-<h1 id="integral-de-ejemplo">Integral de ejemplo</h1>
-<p>result = gaussian_integral(lambda x: x<strong>6 * x</strong>2 * np.sin(2*x), 1, 3, 5)
-print(result)  # Resultado aproximado</p>
+import IntegralGaussianCuadrature as igc
+exacto = igc.ValorExacto_1_a_3()
+print(f"Valor exacto analítico: {exacto:.16f}")</p>
+<h3 id="gausslegendrexwn"><code>GaussLegendrexW(N)</code></h3>
+<p>Esta función devuelve los <strong>puntos y pesos de Gauss-Legendre</strong> para un número dado de puntos <code>N</code>.<br />
+Estos valores son esenciales para realizar la <strong>cuadratura Gauss-Legendre</strong>, que permite calcular integrales numéricamente de manera muy precisa.</p>
+<ul>
+<li><strong>Entrada</strong>:  </li>
+<li>
+<p><code>N</code> (int): número de puntos de la cuadratura.</p>
+</li>
+<li>
+<p><strong>Salida</strong>:  </p>
+</li>
+<li><code>x</code> (array): los <strong>puntos de evaluación</strong> en el intervalo estándar [-1, 1].  </li>
+<li><code>w</code> (array): los <strong>pesos</strong> correspondientes a cada punto, que multiplican la función para aproximar la integral.</li>
+</ul>
+<p><strong>Ejemplo de uso:</strong></p>
+<p>```python
+import IntegralGaussianCuadrature as igc</p>
+<h1 id="obtener-puntos-y-pesos-para-n3">Obtener puntos y pesos para N=3</h1>
+<p>x, w = igc.GaussLegendrexW(3)</p>
+<p>print("Puntos:", x)
+print("Pesos:", w)</p>
+<p>GaussXWAB(a, b, x, w)</p>
+<p>Transforma los puntos y pesos del intervalo [-1,1] a [a,b].</p>
+<p>x_trans, w_trans = igc.GaussXWAB(1, 3, x, w)
+print("Puntos transformados:", x_trans)
+print("Pesos transformados:", w_trans)</p>
+<h3 id="funcintegrarx"><code>FuncIntegrar(x)</code></h3>
+<p>Esta función define <strong>la función que queremos integrar</strong> usando la cuadratura Gauss-Legendre.</p>
+<ul>
+<li><strong>Entrada</strong>:  </li>
+<li>
+<p><code>x</code> (float o array): punto(s) donde se evaluará la función.  </p>
+</li>
+<li>
+<p><strong>Salida</strong>:  </p>
+</li>
+<li><code>y</code> (float o array): valor(es) de la función evaluada(s) en <code>x</code>.</li>
+</ul>
+<p><strong>Ejemplo de uso</strong>:</p>
+<p>```python
+import numpy as np
+import IntegralGaussianCuadrature as igc</p>
+<h1 id="evaluar-la-funcion-en-varios-puntos">Evaluar la función en varios puntos</h1>
+<p>y = igc.FuncIntegrar(np.array([1.0, 2.0, 3.0]))
+print("Valores de f(x):", y)</p>
+<h3 id="calcintegralesnvalores"><code>CalcIntegrales(NValores)</code></h3>
+<p>Esta función permite <strong>calcular la integral numéricamente</strong> usando cuadratura Gauss-Legendre para una lista de valores <code>N</code> (número de puntos).</p>
+<h4 id="parametros">Parámetros</h4>
+<ul>
+<li><code>NValores</code> (list of int): lista de números de puntos <code>N</code> para los que se desea calcular la integral.</li>
+</ul>
+<h4 id="retorno">Retorno</h4>
+<ul>
+<li><code>ResultadosInt</code> (dict): diccionario donde cada clave es un valor <code>N</code> y cada valor es la integral calculada con ese número de puntos.</li>
+</ul>
+<h4 id="ejemplo-de-uso">Ejemplo de uso</h4>
+<p>```python
+import IntegralGaussianCuadrature as igc</p>
+<h1 id="valor-exacto-para-comparar-resultados">Valor exacto para comparar resultados</h1>
+<p>exacto = igc.ValorExacto_1_a_3()</p>
+<h1 id="lista-de-valores-de-n">Lista de valores de N</h1>
+<p>NLista = [2, 3, 4, 5, 6]</p>
+<h1 id="calcular-integrales-para-cada-n">Calcular integrales para cada N</h1>
+<p>resultados = igc.CalcIntegrales(NLista)</p>
+<h1 id="mostrar-resultados-y-errores-relativos">Mostrar resultados y errores relativos</h1>
+<p>for N, valor in resultados.items():
+    error = abs(valor - exacto)
+    print(f"N={N}: {valor:.12f}, Error={error:.3e}")</p>
 
 
 
