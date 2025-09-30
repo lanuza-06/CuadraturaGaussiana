@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
       
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,7 +60,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -64,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#integracion-usando-cuadratura-gaussiana" class="md-skip">
+        <a href="#cuadratura-gaussiana-en-python" class="md-skip">
           Skip to content
         </a>
       
@@ -107,8 +117,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -321,12 +331,84 @@
 
 
 
-<h1 id="integracion-usando-cuadratura-gaussiana">Integración usando Cuadratura Gaussiana</h1>
-<p>Esta página documenta la implementación de la <strong>cuadratura Gaussiana</strong> para la integral:</p>
+<h1 id="cuadratura-gaussiana-en-python">Cuadratura Gaussiana en Python</h1>
+<p>Bienvenido a la documentación del proyecto <strong>Cuadratura Gaussiana</strong>, desarrollado en Python.<br />
+Este proyecto implementa la <strong>integración numérica mediante Cuadratura Gauss-Legendre</strong>, un método eficiente para calcular integrales definidas con alta precisión.</p>
+<h1 id="gauss-legendre">(Gauss-Legendre)</h1>
+<h2 id="introduccion">Introducción</h2>
+<p>La <strong>Cuadratura Gaussiana</strong> es un método numérico para aproximar integrales definidas, especialmente útil cuando la integral es difícil o imposible de resolver de forma analítica. A diferencia de otros métodos como el <strong>Trapecio</strong> o <strong>Simpson</strong>, la cuadratura gaussiana <strong>elige de manera óptima los puntos y pesos</strong> para evaluar la función, logrando una precisión muy alta con pocos puntos de evaluación.</p>
+<p>El método se basa en <strong>polinomios ortogonales</strong>, y el más usado para integrales definidas en el intervalo <span class="arithmatex">\([-1, 1]\)</span> es el <strong>polinomio de Legendre</strong>, de ahí que a veces se llame <strong>Cuadratura Gauss-Legendre</strong>.  </p>
+<hr />
+<h2 id="breve-historia">Breve Historia</h2>
+<ul>
+<li><strong>Carl Friedrich Gauss (1777–1855):</strong> Matemático alemán que desarrolló ideas sobre la interpolación y los polinomios ortogonales. Su contribución permitió la creación de fórmulas de integración con precisión máxima para un número dado de puntos.</li>
+<li><strong>Polinomios de Legendre:</strong> Jean Baptiste Joseph Fourier y Adrien-Marie Legendre estudiaron estos polinomios en el siglo XIX. Los ceros de estos polinomios son los puntos óptimos para evaluar la integral en la cuadratura gaussiana.  </li>
+</ul>
+<p>En resumen, el método combina la teoría de <strong>polinomios ortogonales</strong> con la optimización de la <strong>integración numérica</strong>, ofreciendo aproximaciones precisas de integrales complejas.  </p>
+<hr />
+<h2 id="resolviendo-una-integral-con-cuadratura-gauss-legendre">Resolviendo una integral con Cuadratura Gauss-Legendre</h2>
+<p>Supongamos que queremos aproximar la integral:</p>
 <div class="arithmatex">\[
-\int_1^3 x^6 x^2 \sin(2x) dx
+\int_{-1}^{1} f(x) \, dx
 \]</div>
-<p>Se utilizan los polinomios de Legendre para calcular puntos y pesos de integración.</p>
+<p>La <strong>fórmula general de n puntos</strong> es:</p>
+<div class="arithmatex">\[
+\int_{-1}^{1} f(x) \, dx \approx \sum_{i=1}^{n} w_i f(x_i)
+\]</div>
+<p>donde:<br />
+- <span class="arithmatex">\(x_i\)</span> son los <strong>ceros del polinomio de Legendre de grado n</strong>.<br />
+- <span class="arithmatex">\(w_i\)</span> son los <strong>pesos asociados</strong> a cada punto <span class="arithmatex">\(x_i\)</span>, calculados para maximizar la precisión.  </p>
+<hr />
+<h3 id="ejemplo-practico">Ejemplo práctico</h3>
+<p>Aproximemos:</p>
+<div class="arithmatex">\[
+\int_{-1}^{1} e^x dx
+\]</div>
+<p>Con <strong>n = 2 puntos</strong>, los ceros y pesos del polinomio de Legendre de grado 2 son:</p>
+<div class="arithmatex">\[
+x_1 = -\frac{1}{\sqrt{3}}, \quad x_2 = \frac{1}{\sqrt{3}}
+\]</div>
+<div class="arithmatex">\[
+w_1 = w_2 = 1
+\]</div>
+<p>Entonces:</p>
+<div class="arithmatex">\[
+\int_{-1}^{1} e^x dx \approx w_1 f(x_1) + w_2 f(x_2) = e^{-1/\sqrt{3}} + e^{1/\sqrt{3}}
+\]</div>
+<p>Esto nos da una <strong>aproximación muy cercana</strong> al valor real de la integral.  </p>
+<hr />
+<h2 id="ventajas-de-la-cuadratura-gaussiana">Ventajas de la Cuadratura Gaussiana</h2>
+<ol>
+<li>Alta precisión con pocos puntos de evaluación.  </li>
+<li>No requiere derivadas ni conocimiento profundo de la función.  </li>
+<li>Muy útil en física, ingeniería y simulaciones numéricas.  </li>
+</ol>
+<hr />
+<h2 id="conclusion">Conclusión</h2>
+<p>La <strong>Cuadratura Gauss-Legendre</strong> es una herramienta poderosa para resolver integrales definidas de manera eficiente y precisa, combinando teoría de polinomios ortogonales y optimización de pesos y nodos. Es ampliamente utilizada en aplicaciones científicas y de ingeniería, donde la precisión y eficiencia son cruciales.</p>
+<hr />
+<h2 id="objetivos-del-proyecto">Objetivos del Proyecto</h2>
+<ol>
+<li>Aplicar la Cuadratura Gaussiana para resolver integrales definidas en cualquier intervalo.</li>
+<li>Comparar los resultados obtenidos con la solución analítica.</li>
+<li>Analizar la <strong>convergencia</strong> y determinar el número mínimo de puntos <span class="arithmatex">\(N\)</span> para alcanzar una tolerancia deseada.</li>
+<li>Proporcionar ejemplos prácticos de uso del código, desde polinomios simples hasta integrales más complejas.</li>
+</ol>
+<hr />
+<h2 id="estructura-de-la-documentacion">Estructura de la Documentación</h2>
+<ul>
+<li><strong>Explanation:</strong> Fundamentos teóricos y matemáticos de la Cuadratura Gaussiana y los polinomios de Legendre.</li>
+<li><strong>Tutorials:</strong> Ejemplos paso a paso de cómo usar el código para distintas funciones y cómo interpretar los resultados.</li>
+<li><strong>Reference:</strong> Descripción detallada de todas las funciones implementadas en el proyecto.</li>
+<li><strong>Código Fuente:</strong> Implementación en Python con docstrings explicativos para cada función.</li>
+</ul>
+<hr />
+<h2 id="por-que-usar-cuadratura-gaussiana">¿Por qué usar Cuadratura Gaussiana?</h2>
+<ul>
+<li>Precisa y eficiente: Integra polinomios exactos de grado hasta <span class="arithmatex">\(2N-1\)</span> usando solo N nodos.</li>
+<li>Más rápida que métodos clásicos como Simpson o Trapecio para el mismo número de evaluaciones de función.</li>
+<li>Flexible: Funciona con funciones polinómicas, trigonométricas, exponenciales o combinaciones de estas.</li>
+</ul>
 
 
 

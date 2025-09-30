@@ -30,6 +30,9 @@
     
       <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -47,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -57,7 +62,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -66,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#explicacion-del-metodo" class="md-skip">
+        <a href="#explicacion-teorica-de-la-cuadratura-gaussiana" class="md-skip">
           Skip to content
         </a>
       
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -229,6 +239,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Explanation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -240,6 +263,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introducción
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ventaja-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ventaja Principal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polinomios-de-legendre" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polinomios de Legendre
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -309,6 +384,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introducción
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introducción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ventaja-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ventaja Principal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polinomios-de-legendre" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polinomios de Legendre
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -323,13 +439,38 @@
 
 
 
-<h1 id="explicacion-del-metodo">Explicación del Método</h1>
-<p>La cuadratura Gaussiana permite aproximar integrales de la forma:</p>
+<h1 id="explicacion-teorica-de-la-cuadratura-gaussiana">Explicación Teórica de la Cuadratura Gaussiana</h1>
+<h2 id="introduccion">Introducción</h2>
+<p>La <strong>Cuadratura Gaussiana</strong> es un método de integración numérica que permite aproximar integrales definidas con gran precisión usando pocos puntos estratégicamente seleccionados.<br />
+Se basa en evaluar la función solo en <strong>nodos de Gauss</strong> <span class="arithmatex">\(x_i\)</span> y multiplicar por <strong>pesos asociados</strong> <span class="arithmatex">\(w_i\)</span>:</p>
 <div class="arithmatex">\[
-\int_a^b f(x) dx \approx \sum_{i=1}^{N} w_i f(x_i)
+I = \int_a^b f(x) dx \approx \sum_{i=1}^{N} w_i f(x_i)
 \]</div>
-<p>donde <span class="arithmatex">\(x_i\)</span> son los puntos de colocación y <span class="arithmatex">\(w_i\)</span> los pesos.<br />
-Se calculan usando polinomios de Legendre.</p>
+<h3 id="ventaja-principal">Ventaja Principal</h3>
+<ul>
+<li>Con N puntos exactos, se pueden integrar polinomios de grado hasta <span class="arithmatex">\(2N-1\)</span> sin error.</li>
+<li>Es mucho más eficiente que métodos clásicos para funciones suaves.</li>
+</ul>
+<hr />
+<h2 id="polinomios-de-legendre">Polinomios de Legendre</h2>
+<p>Los <strong>puntos y pesos de Gauss</strong> se obtienen a partir de los <strong>polinomios de Legendre</strong>, <span class="arithmatex">\(P_n(x)\)</span>, definidos en el intervalo <span class="arithmatex">\([-1,1]\)</span>.  </p>
+<p>Propiedades importantes:</p>
+<ol>
+<li>
+<p><strong>Ortogonalidad:</strong><br />
+[
+\int_{-1}^{1} P_n(x) P_m(x) dx = 0 \quad \text{para } n \neq m
+]</p>
+</li>
+<li>
+<p><strong>Nodos de Gauss:</strong> Raíces de <span class="arithmatex">\(P_N(x)\)</span>.</p>
+</li>
+<li><strong>Pesos de Gauss:</strong> Se calculan automáticamente para garantizar la integración exacta de polinomios de grado ≤ <span class="arithmatex">\(2N-1\)</span>.</li>
+</ol>
+<p>En Python:</p>
+<p>```python
+import numpy as np
+x, w = np.polynomial.legendre.leggauss(N)</p>
 
 
 
